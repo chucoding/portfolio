@@ -16,6 +16,52 @@
 	<link rel="stylesheet" href="vendors/nice-select/css/nice-select.css">
 	<!-- main css -->
 	<link rel="stylesheet" href="css/style.css">
+	
+	<style type="text/css">
+.typing-txt {
+	display: none;
+}
+
+.typeing-txt ul {
+	list-style: none;
+}
+
+.typing {
+	display: inline-block;
+	animation-name: cursor;
+	animation-duration: 0.3s;
+	animation-iteration-count: infinite;
+}
+
+@
+keyframes cursor { 0%{
+	border-right: 1px solid #fff
+}
+50%{
+border-right
+:
+ 
+1
+px
+ 
+solid
+ 
+#000
+}
+100%{
+border-right
+:
+ 
+1
+px
+ 
+solid
+ 
+#fff
+}
+}
+</style>
+	
 </head>
 
 <body>
@@ -69,15 +115,31 @@
 				<div class="row">
 					<div class="col-lg-7">
 						<div class="banner_content">
-							<h1 class="text-uppercase">Hello</h1>
-							<h1 class="text-uppercase">I am chucoding</h1>
-							<h5 class="text-uppercase">안녕하세요 츄코딩 입니다.</h5>
-							<h5 class="text-uppercase">Web/app developer</h5>
-							<div class="d-flex align-items-center">
-								<a class="primary_btn" href="resume.html"><span>자세히 보기</span></a>
+
+							<div class="typing-txt">
+								<ul style="list-style: none;">
+									<li><h1 class="text-uppercase">Hello_</h1></li>
+									<li><h1 class="text-uppercase">I am chucoding_</h1></li>
+									<li><h5 class="text-uppercase">안녕하세요_</h5></li>
+									<li><h5 class="text-uppercase">개발자 츄코딩 입니다_</h5>
+								</ul>
 							</div>
+
+							<!-- Masthead -->
+							<header class="masthead">
+								<div class="container h-100">
+									<div
+										class="row h-100 align-items-center justify-content-center text-center">
+										<div class="col-lg-10 align-self-end" style="height:20px;">
+											<h1 class="text-uppercase font-weight-bold typing"></h1>
+										</div>
+										<div class="col-lg-8 align-self-baseline"></div>
+									</div>
+								</div>
+							</header>
 						</div>
 					</div>
+					
 					<div class="col-lg-5">
 						<div class="home_right_img">
 							<img class="" src="img/banner/home-right.png" alt="">
@@ -287,6 +349,49 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 	<script src="js/gmaps.min.js"></script>
 	<script src="js/theme.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var typingBool = false;
+			var typingIdx = 0;
+			var liIndex = 0;
+			var liLength = $(".typing-txt>ul>li").length;
+
+			// 타이핑될 텍스트를 가져온다 
+			var typingTxt = $(".typing-txt>ul>li").eq(liIndex).text();
+			typingTxt = typingTxt.split(""); // 한글자씩 자른다. 
+			if (typingBool == false) { // 타이핑이 진행되지 않았다면 
+				typingBool = true;
+				var tyInt = setInterval(typing, 280); // 반복동작 
+			}
+
+			function typing() {
+				if (typingIdx < typingTxt.length) { // 타이핑될 텍스트 길이만큼 반복 
+					$(".typing").append(typingTxt[typingIdx]); // 한글자씩 이어준다. 
+					typingIdx++;
+				} else { //한문장이끝나면
+					//다음문장으로.. 마지막문장이면 다시 첫번째 문장으로 
+					if (liIndex >= liLength - 1) {
+						liIndex = 0;
+					} else {
+						liIndex++;
+					}
+
+					//다음문장을 타이핑하기위한 셋팅
+					typingIdx = 0;
+					typingBool = false;
+					typingTxt = $(".typing-txt>ul>li").eq(liIndex).text();
+
+					//다음문장 타이핑전 1초 쉰다
+					clearInterval(tyInt);
+					setTimeout(function() {
+						$(".typing").html('');
+						tyInt = setInterval(typing, 280);
+					}, 1000);
+				}
+			}
+		});
+	</script>
 </body>
 
 </html>
