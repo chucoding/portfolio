@@ -20,6 +20,34 @@
 	<style type="text/css">
 		.progress-table .division {	width : 30%; }
 		.progress-table .item { width : 70%; }
+		
+		.wrap2 {
+	/*   position: absolute; */
+	/*   top: 100; */
+	/*   left: 0; */
+	width: 100%;
+	height: 500px;
+}
+
+.target {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+}
+
+.photo {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+ 	background-size: contain;
+	transition: transform .5s ease-out;
+}
+		
 	</style>
 	
 </head>
@@ -205,6 +233,9 @@
 	<section class="sample-text-area">
 		<div class="container">
 			<h3 class="text-heading title_color">DB 설계</h3>
+			<div class="wrap2">
+    			<div class="target" data-scale="4" data-image="img/khcafe/khcafe-erd.png"></div>
+			</div>
 		</div>
 	</section>
 	<!-- End Sample Area -->
@@ -279,5 +310,39 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		<script src="js/jquery.ajaxchimp.min.js"></script>
 		<script src="js/mail-script.js"></script>
 		<script src="js/theme.js"></script>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('.target')
+			    .append('<div class="photo"></div>')
+			    .children('.photo').css({
+			            'background-image': 'url(' + $('.target').attr('data-image') + ')'
+			    })
+			    
+			    $('.target')    
+			    .on('mouseover', function () {
+			        $(this).children('.photo').css({
+			            'transform': 'scale(' + $(this).attr('data-scale') + ')'
+			        });
+			    })
+			    
+			    $('.target')
+			    .on('mouseout', function () {
+			        $(this).children('.photo').css({
+			            'transform': 'scale(1)'
+			        });
+			    })
+
+			    $('.target')
+			    .on('mousemove', function (e) {
+			        $(this).children('.photo').css({
+			            'transform-origin': ((e.pageX - $(this).offset().left) / $(this).width()) * 100 + '% ' + ((e.pageY - $(this).offset().top) / $(this).height()) * 100 + '%'
+			        });
+				})
+
+
+			});
+		</script>
+		
 	</body>
 </html>
